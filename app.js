@@ -121,5 +121,18 @@ app.post('/edited/:todos_id', function (req, res) {
   })
 })
 
+// delete task
+app.post('/delete/:todo_id', function (req, res) {
+  const id = req.params.todo_id;
+
+  Todos.destroy({
+    where: {
+      id: id,
+    }
+  }) .then(function () {
+    res.redirect('/todo');
+  });
+});
+
 /* ******** START SERVER ******** */
 app.listen(4000);
