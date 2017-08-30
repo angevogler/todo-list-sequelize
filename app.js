@@ -90,11 +90,21 @@ app.post('/not_completed/:todos_id', function (req, res) {
 });
 
 // edit task
-app.get('/edit', function (req, res) {
+app.get('/edit/:todos_id', function (req, res) {
+  const id = parseInt(req.params.todos_id);
+  // let edit;
+
   Todos.findAll()
     .then(function (todos) {
+      for (let i = 0; i < todos.length; i++) {
+        // edit = todos[i].edit;
+        if (todos[i].id === id ) {
+          todos[i].edit = true;
+        } else {
+          todos[i].edit = false;
+        }
+      }
       res.render('todo', {
-        edit: true,
         todos: todos,
       });
     })
@@ -102,7 +112,7 @@ app.get('/edit', function (req, res) {
 
 app.post('/edit/:todos_id', function (req, res) {
   const id=req.params.todos_id;
-    res.redirect('/edit');
+    res.redirect('/edit/' + id);
 });
 
 app.post('/edited/:todos_id', function (req, res) {

@@ -19,22 +19,24 @@
         {{ #todos }}
         {{ ^completed }}
         <li>
-          <form method="post" action="/completed/{{ id }}">
-            <input type="submit" value="Mark Complete">
-          </form>
-          {{ task }}
           {{ #edit }}
           <form method="post" action="/edited/{{ id }}">
             <input type="text" name="edited_task" value="{{ task }}">
             <input type="submit" value="Update Task">
           </form>
           {{ /edit }}
+          {{ ^edit }}
+          <form method="post" action="/completed/{{ id }}">
+            <input type="submit" value="Mark Complete">
+          </form>
+          {{ task }}
           <form method="post" action="/edit/{{ id }}">
             <input type="submit" value="Edit">
           </form>
           <form method="post" action="/delete/{{ id }}">
             <input type="submit" value="Delete">
           </form>
+          {{ /edit }}
         </li>
         {{ /completed }}
         {{ /todos }}
