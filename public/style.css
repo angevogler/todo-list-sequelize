@@ -1,0 +1,51 @@
+body {
+  background-color: #E0F5F5;
+  font-family: 'Playfair Display', serif;
+  color: #303030;
+}
+
+h1 {
+  text-align: center;
+  border-bottom: double 8px #F08080;
+  width: 20%;
+  margin-left: 40%;
+  margin-right: 40%;
+  padding: 0.5%;
+}
+
+.create-task {
+  width: 20%;
+  margin-left: 40%;
+  margin-right: 40%;
+  padding: 2%;
+}
+
+section {
+  display: flex;
+  justify-content: space-around;
+  text-transform: capitalize;
+}
+
+.incomplete {
+  background-color: white;
+  width: 40%;
+  border: dotted 8px #F08080;
+  padding: 2%;
+  margin: 1%;
+}
+
+.complete {
+  background-color: white;
+  width: 40%;
+  border: dotted 8px #F08080;
+  padding: 2%;
+  margin: 1%;
+}
+
+.list {
+  list-style: none;
+}
+
+.tasks {
+  display: flex;
+}

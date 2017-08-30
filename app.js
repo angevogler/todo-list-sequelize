@@ -16,6 +16,9 @@ app.set('view engine', 'mustache');
 // configure body-parser
 app.use(bodyparser.urlencoded({ extended: true }));
 
+// configure CSS
+app.use(express.static('public'));
+
 /* ******** TODO LIST SCHEMA ******** */
 const db = new Sequelize('todo-list', 'angelavogler', '', {
     dialect: 'postgres',
@@ -40,7 +43,11 @@ Todos.sync().then(function () {
 /* ******** REQUESTS ******** */
 // display list
 app.get('/todo', function (req, res) {
-  Todos.findAll()
+  Todos.findAll({
+    order: [
+      ['createdAt', 'DESC'],
+    ]
+  })
     .then(function (todos) {
       res.render('todo', {
         todos: todos,
@@ -92,12 +99,14 @@ app.post('/not_completed/:todos_id', function (req, res) {
 // edit task
 app.get('/edit/:todos_id', function (req, res) {
   const id = parseInt(req.params.todos_id);
-  // let edit;
 
-  Todos.findAll()
+  Todos.findAll({
+    order: [
+      ['createdAt', 'DESC'],
+      ]
+  })
     .then(function (todos) {
       for (let i = 0; i < todos.length; i++) {
-        // edit = todos[i].edit;
         if (todos[i].id === id ) {
           todos[i].edit = true;
         } else {
@@ -123,7 +132,10 @@ app.post('/edited/:todos_id', function (req, res) {
   }, {
     where: {
       id: id,
-    }
+    } }, {
+    order: [
+      ['createdAt', 'DESC'],
+      ]
   }) .then(function (todos) {
     res.redirect('/todo');
   }) .catch(function () {
@@ -143,6 +155,18 @@ app.post('/delete/:todo_id', function (req, res) {
     res.redirect('/todo');
   });
 });
+
+// delete all completed tasks
+app.post('/delete_completed', function (req, res) {
+  Todos.destroy({
+    where: {
+      completed: true,
+    }
+  }) .then(function() {
+    res.redirect('/todo');
+  });
+});
+
 
 /* ******** START SERVER ******** */
 app.listen(4000);

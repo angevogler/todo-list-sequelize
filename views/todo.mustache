@@ -1,65 +1,72 @@
 <!doctype html>
 <html>
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <title>To Do List</title>
   </head>
 
   <body>
     <h1>To Do List</h1>
 
-    <form method="post" action="/new_task">
+    <form method="post" action="/new_task" class="create-task">
       <label>Add New Task</label>
       <input type="text" name="new_task">
       <input type="submit" value="Add Task">
     </form>
 
-    <div>
-      <h2>Tasks:</h2>
-      <ul>
-        {{ #todos }}
-        {{ ^completed }}
-        <li>
-          {{ #edit }}
-          <form method="post" action="/edited/{{ id }}">
-            <input type="text" name="edited_task" value="{{ task }}">
-            <input type="submit" value="Update Task">
-          </form>
-          {{ /edit }}
-          {{ ^edit }}
-          <form method="post" action="/completed/{{ id }}">
-            <input type="submit" value="Mark Complete">
-          </form>
-          {{ task }}
-          <form method="post" action="/edit/{{ id }}">
-            <input type="submit" value="Edit">
-          </form>
-          <form method="post" action="/delete/{{ id }}">
-            <input type="submit" value="Delete">
-          </form>
-          {{ /edit }}
-        </li>
-        {{ /completed }}
-        {{ /todos }}
-      </ul>
-    </div>
-
-    <div>
-      <h2>Completed:</h2>
-      <ul>
-        {{ #todos }}
-        {{ #completed }}
-        <li>
-          <form method="post" action="/not_completed/{{ id }}">
-            <input type="submit" value="Completed">
-          </form>
-          {{ task }}
-          <form method="post" action="/delete{{ id }}">
-            <input type="submit" value="Delete">
-          </form>
-        </li>
+    <section>
+      <div class="incomplete">
+        <h2>Tasks:</h2>
+        <ul class="list">
+          {{ #todos }}
+          {{ ^completed }}
+          <li class="tasks">
+            {{ #edit }}
+            <form method="post" action="/edited/{{ id }}">
+              <input type="text" name="edited_task" value="{{ task }}">
+              <input type="submit" value="Update Task">
+            </form>
+            {{ /edit }}
+            {{ ^edit }}
+            <form method="post" action="/completed/{{ id }}">
+              <input type="submit" value="Mark Complete">
+            </form>
+            {{ task }}
+            <form method="post" action="/edit/{{ id }}">
+              <input type="submit" value="Edit">
+            </form>
+            <form method="post" action="/delete/{{ id }}">
+              <input type="submit" value="Delete">
+            </form>
+            {{ /edit }}
+          </li>
           {{ /completed }}
-        {{ /todos }}
-      </ul>
-    </div>
+          {{ /todos }}
+        </ul>
+      </div>
+
+      <div class="complete">
+        <h2>Completed:</h2>
+        <form method="post" action="/delete_completed">
+          <input type="submit" value="Delete All Completed">
+        </form>
+        <ul class="list">
+          {{ #todos }}
+          {{ #completed }}
+          <li class="tasks">
+            <form method="post" action="/not_completed/{{ id }}">
+              <input type="submit" value="Completed">
+            </form>
+            {{ task }}
+            <form method="post" action="/delete{{ id }}">
+              <input type="submit" value="Delete">
+            </form>
+          </li>
+            {{ /completed }}
+          {{ /todos }}
+        </ul>
+      </div>
+  </section>
   </body>
 </html>
