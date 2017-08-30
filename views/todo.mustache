@@ -23,6 +23,12 @@
             <input type="submit" value="Mark Complete">
           </form>
           {{ task }}
+          {{ #edit }}
+          <form method="post" action="/edited/{{ id }}">
+            <input type="text" name="edited_task" value="{{ task }}">
+            <input type="submit" value="Update Task">
+          </form>
+          {{ /edit }}
           <form method="post" action="/edit/{{ id }}">
             <input type="submit" value="Edit">
           </form>

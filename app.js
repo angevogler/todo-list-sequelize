@@ -89,5 +89,37 @@ app.post('/not_completed/:todos_id', function (req, res) {
   });
 });
 
+// edit task
+app.get('/edit', function (req, res) {
+  Todos.findAll()
+    .then(function (todos) {
+      res.render('todo', {
+        edit: true,
+        todos: todos,
+      });
+    })
+});
+
+app.post('/edit/:todos_id', function (req, res) {
+  const id=req.params.todos_id;
+    res.redirect('/edit');
+});
+
+app.post('/edited/:todos_id', function (req, res) {
+  const id=req.params.todos_id;
+
+  Todos.update({
+    task: req.body.edited_task,
+  }, {
+    where: {
+      id: id,
+    }
+  }) .then(function (todos) {
+    res.redirect('/todo');
+  }) .catch(function () {
+    console.log("error")
+  })
+})
+
 /* ******** START SERVER ******** */
 app.listen(4000);
