@@ -20,7 +20,7 @@
         {{ ^completed }}
         <li>
           <form method="post" action="/completed/{{ id }}">
-            <input type="submit" value="Completed">
+            <input type="submit" value="Mark Complete">
           </form>
           {{ task }}
           <form method="post" action="/edit/{{ id }}">
@@ -41,7 +41,7 @@
         {{ #todos }}
         {{ #completed }}
         <li>
-          <form method="post" action="/completed/{{ id }}">
+          <form method="post" action="/not_completed/{{ id }}">
             <input type="submit" value="Completed">
           </form>
           {{ task }}

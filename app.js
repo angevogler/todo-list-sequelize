@@ -59,5 +59,35 @@ app.post('/new_task', function (req, res) {
   });
 });
 
+// mark task complete
+app.post('/completed/:todos_id', function (req, res) {
+  const id = req.params.todos_id;
+
+  Todos.update({
+    completed: true,
+  }, {
+    where: {
+      id: id
+    },
+  }) .then(function() {
+    res.redirect('/todo');
+  });
+});
+
+// mark incomplete
+app.post('/not_completed/:todos_id', function (req, res) {
+  const id = req.params.todos_id;
+
+  Todos.update({
+    completed: false,
+  }, {
+    where: {
+      id: id
+    },
+  }) .then(function() {
+    res.redirect('/todo');
+  });
+});
+
 /* ******** START SERVER ******** */
 app.listen(4000);
