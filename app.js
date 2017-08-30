@@ -29,6 +29,12 @@ const Todos = db.define('todos', {
 // synchronize schema with db
 Todos.sync().then(function () {
     console.log('todo list synched');
+
+    // Todos.create({
+    //   task: 'finish todo list project',
+    //   completed: false,
+    // });
+
 });
 
 /* ******** REQUESTS ******** */
@@ -40,6 +46,17 @@ app.get('/todo', function (req, res) {
         todos: todos,
       });
     })
+});
+
+// add new task
+app.post('/new_task', function (req, res) {
+  Todos.create({
+    task: req.body.new_task,
+    completed: false,
+  }).then(function (todos) {
+    // wait until insertion of new task is compeleted then refresh
+    res.redirect('/todo');
+  });
 });
 
 /* ******** START SERVER ******** */
